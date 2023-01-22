@@ -1,3 +1,9 @@
-import logo from './logo.svg'
+import download from './download.png';
+import logo from './logo.svg';
+import preview from './preview.png';
 
-export {logo}
+export {
+  download,
+  logo,
+  preview,
+};
