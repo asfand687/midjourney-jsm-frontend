@@ -30,7 +30,31 @@ const CreatePost = () => {
     setForm({ ...form, prompt: randomPrompt })
   }
 
-  const generateImage = () => { }
+  const generateImage = async () => {
+    if (form.prompt) {
+      try {
+        setGeneratingImg(true)
+        const response = await fetch('http://localhost:8080/api/v1/dalle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ prompt: form.prompt }),
+        })
+
+        const data = await response.json()
+        console.log("RESPONSE", data)
+
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` })
+      } catch (error) {
+        console.log(error.message)
+      } finally {
+        setGeneratingImg(false)
+      }
+    } else {
+      alert('Please enter a prompt')
+    }
+  }
 
   return (
     <section className="w-full max-w-7xl mx-auto">
@@ -79,7 +103,7 @@ const CreatePost = () => {
           )}
 
           {generatingImg && (
-            <div className="absolute inset-0 z-0 flex justiyf-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg">
+            <div className="absolute inset-0 z-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg">
               <Loader />
             </div>
           )}
