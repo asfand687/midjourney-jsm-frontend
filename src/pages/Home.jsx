@@ -18,6 +18,23 @@ const Home = () => {
   const [loading, setLoading] = useState(false)
   const [allPosts, setAllPosts] = useState(null)
   const [searchText, setSearchText] = useState("")
+  const [searchedResults, setSearchedResults] = useState(null)
+  const [searchTimeout, setSearchTimeout] = useState(null)
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout)
+
+    setSearchText(e.target.value)
+
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResults = allPosts.filter(
+          (item) => item.name.toLowerCase().includes(searchText.toLowerCase() || item.prompt.toLowerCase().includes(searchText.toLowerCase())
+        ))
+        setSearchedResults(searchResults)
+      }, 500)
+    )
+  }
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -44,6 +61,7 @@ const Home = () => {
   
     fetchPosts()
   }, [])
+  console.log(searchedResults)
   return (
     <section className='max-w-7xl mx-auto'>
       <div>
@@ -56,7 +74,14 @@ const Home = () => {
       </div>
 
       <div className="mt-16">
-        <FormField/>
+        <FormField
+          labelName="Search posts"
+          type="text"
+          name="text"
+          placeholder="Search posts"
+          value={searchText}
+          handleChange={handleSearchChange}
+        />
       </div>
 
       <div className="mt-10">
@@ -77,7 +102,7 @@ const Home = () => {
             {
               searchText ? (
                 <RenderCards
-                  data={[]}
+                  data={searchedResults}
                   title="No search results found"
                 />
               ) : (
