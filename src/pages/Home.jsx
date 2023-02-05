@@ -14,6 +14,8 @@ const RenderCards = ({ data, title }) => {
   )
 }
 
+useEffect(() => { }, [])
+
 const Home = () => {
   const [loading, setLoading] = useState(false)
   const [allPosts, setAllPosts] = useState(null)
