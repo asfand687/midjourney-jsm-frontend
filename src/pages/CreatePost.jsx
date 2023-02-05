@@ -17,7 +17,7 @@ const CreatePost = () => {
   const [generatingImg, setGeneratingImg] = useState(false)
   const[loading, setLoading] = useState(false)
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
 
   }
 
