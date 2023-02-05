@@ -14,7 +14,21 @@ const RenderCards = ({ data, title }) => {
   )
 }
 
-useEffect(() => { }, [])
+useEffect(() => {
+  const fetchPosts = async () => {
+    setLoading(true)
+
+    try {
+
+    } catch (error) {
+
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  fetchPosts()
+}, [])
 
 const Home = () => {
   const [loading, setLoading] = useState(false)
